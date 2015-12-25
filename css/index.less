@@ -1,0 +1,39 @@
+.p-clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+/*点击变蓝色高亮*/
+.mui-table-view-cell.mui-active{
+    background-color: #0062CC;
+}
+.table-view-title {
+    color: #cacaca;
+    .title-item {
+        float: left;
+        width: 25%;
+        text-align: center;
+    }
+}
+.mui-table-view-cell {
+    &.red {
+        .riseAndFall, .upsAndDowns, .currentPrice {
+            color: red;
+        }
+    }
+    &.green {
+        .riseAndFall, .upsAndDowns, .currentPrice {
+            color: green;
+        }
+    }
+    &>div {
+        float: left;
+        width: 25%;
+        text-align: center;
+    }
+    .name {
+        font-size: 12px;
+    }
+}
