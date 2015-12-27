@@ -35,4 +35,9 @@
 .mui-table-view-cell .name {
   font-size: 12px;
 }
+.mui-table-view-cell .riseAndFall,
+.mui-table-view-cell .upsAndDowns,
+.mui-table-view-cell .currentPrice {
+  margin-top: 10px;
+}
 /*# sourceMappingURL=index.css.map */

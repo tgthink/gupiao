@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+</head>
+<body>
+	<header id="header" class="mui-bar mui-bar-nav">
+		<!-- mui-plus-visible mui-icon-bars-->
+		<!--a class="mui-icon mui-icon-contact mui-pull-left" style="color: #999;"></a-->
+		<a id="login" class="mui-pull-left" style="padding-top: 13px;" href="examples/login/login.html">登录</a>
+		<a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>
+		<h1 class="mui-title">谷&nbsp;票</h1>
+	</header>
+	<div class="mui-content">
+        <ul id="menuList" class="mui-table-view mui-grid-view mui-grid-9">
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+            	<a href="examples/optionalStock.html">
+                    <span class="mui-icon mui-icon-contact"></span>
+                    <div class="mui-media-body">自选股</div>
+            	</a>
+            </li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-email"><span class="mui-badge">5</span></span>
+                    <div class="mui-media-body">Email</div></a></li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-chatbubble"></span>
+                    <div class="mui-media-body">Chat</div></a></li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-location"></span>
+                    <div class="mui-media-body">location</div></a></li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-search"></span>
+                    <div class="mui-media-body">Search</div></a></li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-phone"></span>
+                    <div class="mui-media-body">Phone</div></a></li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-gear"></span>
+                    <div class="mui-media-body">Setting</div></a></li>
+            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-info"></span>
+                    <div class="mui-media-body">about</div></a></li>
+           <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                    <span class="mui-icon mui-icon-more"></span>
+                    <div class="mui-media-body">more</div></a></li>
+        </ul>
+	</div>
+    <script src="js/mui.min.js"></script>
+    <script src="js/zepto_1.1.3.js"></script>
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+		//处理右上角关于图标的点击事件；
+//		var subWebview = null,
+//			template = null;
+		$("#login").on("tap", function(){
+			mui.openWindow({
+				url: "examples/index.html",
+				id: "index",
+				show:{
+					aniShow:'zoom-fade-out',
+					duration: 300
+				}
+			});
+		});
+		$("#info").on("tap", function() {
+			mui.openWindow({
+				url: "examples/index.html",
+				id: "index",
+				show:{
+					aniShow:'zoom-fade-out',
+					duration:300
+				}
+			});
+		});
+		$('#menuList,#header').on('tap', 'a', function() {
+			var aniShow = "pop-in";
+			var $this = $(this);
+			var id = $this.prop('href');
+			var href = $this.prop('href');
+			mui.openWindow({
+				id: id,
+				url: href,
+				styles: {
+					popGesture: 'close'
+				},
+				show: {
+					aniShow: aniShow
+				},
+				waiting: {
+					autoShow: false
+				}
+			});
+		});
+		//document.getElementById('info').addEventListener('tap', function() {
+//			if (!mui.os.plus) {
+//				mui.openWindow({
+//					url: "examples/info.html",
+//					id: "info",
+//					show: {
+//						aniShow: 'zoom-fade-out',
+//						duration: 300
+//					}
+//				});
+//				return;
+//			}
+//			if (subWebview == null) {
+//				//获取共用父窗体
+//				template = plus.webview.getWebviewById("default-main");
+//			}
+//			if (template) {
+//				subWebview = template.children()[0];
+//				subWebview.loadURL('examples/info.html');
+//				//修改共用父模板的标题
+//				mui.fire(template, 'updateHeader', {
+//					title: '关于',
+//					showMenu: false
+//				});
+//				template.show('slide-in-right', 150);
+//			}
+//			mui.openWindow({
+//				url: "examples/index.html",
+//				id: "index",
+//				show:{
+//					aniShow:'zoom-fade-out',
+//					duration:300
+//				}
+//			});
+//		});
+    </script>
+</body>
+</html>
