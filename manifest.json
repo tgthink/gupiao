@@ -248,7 +248,24 @@
 			"examples/login/login.html": {
 				"resources": [
 					"js/app.js",
-					"js/mui.enterfocus.js"
+					"js/mui.enterfocus.js",
+					"js/mui.min.js",
+					"fonts/mui.ttf",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"main.html",
+					"examples/login/reg.html",
+					"examples/login/forget_password.html"
+				],
+				"priority": 0
+			},
+			"examples/login/reg.html": {
+				"resources": [
+					"fonts/mui.ttf",
+					"css/mui.min.css",
+					"js/app.js",
+					"js/mui.min.js"
 				],
 				"refer": [],
 				"priority": 0

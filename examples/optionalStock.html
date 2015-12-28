@@ -47,86 +47,93 @@
 		mui.init({
 			swipeBack: true //启用右滑关闭功能
 		});
-      	var stockCodeDhrd = "002005";
-      	var stockCodeSdwd = "002026";
-      	var stockCodeCcqc = "601633";
-      	mui.ajax('http://apis.baidu.com/apistore/stockservice/stock?stockid=sz' + stockCodeDhrd + ',sz' + stockCodeSdwd + ',sh' + stockCodeCcqc + '&list=1',{
-      		headers: {
-      			'apikey' : "2d3061c6b453f6e9ba40d19631d57cc3"
-      		},
-			dataType:'json',//服务器返回json格式数据
-			type:'get',//HTTP请求类型
-			timeout:10000,//超时时间设置为10秒；
-			success:function(data){
-				console.log(data.errNum);
-				console.log(data.retData);
-				console.log(data.retData.stockinfo);
-				var stockinfo = data.retData.stockinfo;
-				var htmlAry = [];
-				htmlAry.push(
-					'<li class="table-view-title p-clearfix">' +
-						'<div class="title-item">名称代码</div>' +
-						'<div class="title-item">涨跌幅</div>' +
-						'<div class="title-item">涨跌</div>' +
-						'<div class="title-item">最新价</div>' +
-					'</li>');
-				for (var i = 0; i < stockinfo.length; i++) {
-					var stockinfoCode = stockinfo[i]["code"];		//股票代码，SZ指在深圳交易的股票
-					stockinfoCode = stockinfoCode.replace(/sz|sh/, "");
-					var closingPrice = stockinfo[i]["closingPrice"];//昨日收盘价
-					var currentPrice = stockinfo[i]["currentPrice"];//当前价格
-					console.log(typeof currentPrice);
-					var upsAndDowns = currentPrice - closingPrice;//涨跌
-					upsAndDowns = upsAndDowns.toFixed(2);
-					//涨跌幅
-					var riseAndFall = upsAndDowns / closingPrice * 100;
-					riseAndFall = riseAndFall.toFixed(2);
-					//closingPrice
-					var liClass = "";
-					if (upsAndDowns > 0) {
-						liClass = "red";
-					} else {
-						liClass = "green";
-					}
+		//加载自选股
+		function loadOptionalStock() {
+	      	var stockCodeDhrd = "002005";
+	      	var stockCodeSdwd = "002026";
+	      	var stockCodeCcqc = "601633";
+	      	mui.ajax('http://apis.baidu.com/apistore/stockservice/stock?stockid=sz' + stockCodeDhrd + ',sz' + stockCodeSdwd + ',sh' + stockCodeCcqc + '&list=1',{
+	      		headers: {
+	      			'apikey' : "2d3061c6b453f6e9ba40d19631d57cc3"
+	      		},
+				dataType:'json',//服务器返回json格式数据
+				type:'get',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+					console.log("=================================");
+//					console.log(data.errNum);
+//					console.log(data.retData);
+//					console.log(data.retData.stockinfo);
+					var stockinfo = data.retData.stockinfo;
+					var htmlAry = [];
 					htmlAry.push(
-						'<li id="' + stockinfoCode + '" class="mui-table-view-cell ' + liClass + '">' +
-							'<div class="name">' + 
-								'<div>'+ stockinfo[i]["name"] + '</div>' +
-								'<span>' + stockinfoCode + '</span></div>' +
-							'<div class="riseAndFall">' + riseAndFall + '%</div>' +
-							'<div class="upsAndDowns">' + upsAndDowns + '</div>' +
-							'<div class="currentPrice">' + currentPrice + '</div>' +
-						'</li>'
-					);
+						'<li class="table-view-title p-clearfix">' +
+							'<div class="title-item">名称代码</div>' +
+							'<div class="title-item">涨跌幅</div>' +
+							'<div class="title-item">涨跌</div>' +
+							'<div class="title-item">最新价</div>' +
+						'</li>');
+					for (var i = 0; i < stockinfo.length; i++) {
+						var stockinfoCode = stockinfo[i]["code"];		//股票代码，SZ指在深圳交易的股票
+						stockinfoCode = stockinfoCode.replace(/sz|sh/, "");
+						var closingPrice = stockinfo[i]["closingPrice"];//昨日收盘价
+						var currentPrice = stockinfo[i]["currentPrice"];//当前价格
+						//console.log(typeof currentPrice);
+						var upsAndDowns = currentPrice - closingPrice;//涨跌
+						upsAndDowns = upsAndDowns.toFixed(2);
+						//涨跌幅
+						var riseAndFall = upsAndDowns / closingPrice * 100;
+						riseAndFall = riseAndFall.toFixed(2);
+						//closingPrice
+						var liClass = "";
+						if (upsAndDowns > 0) {
+							liClass = "red";
+						} else {
+							liClass = "green";
+						}
+						htmlAry.push(
+							'<li id="' + stockinfoCode + '" class="mui-table-view-cell ' + liClass + '">' +
+								'<div class="name">' + 
+									'<div>'+ stockinfo[i]["name"] + '</div>' +
+									'<span>' + stockinfoCode + '</span></div>' +
+								'<div class="riseAndFall">' + riseAndFall + '%</div>' +
+								'<div class="upsAndDowns">' + upsAndDowns + '</div>' +
+								'<div class="currentPrice">' + currentPrice + '</div>' +
+							'</li>'
+						);
+					}
+					$("#stockList").html(htmlAry.join(""));
+					setTimeout(loadOptionalStock, 3000);
+					//setTimeout(arguments.callee, 3000);
+	//				mui.ajax('http://hq.sinajs.cn/list=s_sz' + stockCodeDhrd + '',{
+	//					dataType:'script',//服务器返回json格式数据
+	//					type:'get',//HTTP请求类型
+	//					timeout:10000,//超时时间设置为10秒；
+	//					success:function(data){
+	//						//服务器返回响应，根据响应结果，分析是否登录成功；
+	//					},
+	//					error:function(xhr,type,errorThrown){
+	//						//异常处理；
+	//						console.log(type);
+	//					}
+	//				});
+				},
+				error:function(xhr,type,errorThrown){
+					//异常处理；
+					console.log(arguments[0]);
+					console.log(arguments[1]);
+					console.log(arguments[2]);
 				}
-				$("#stockList").html(htmlAry.join(""));
-//				mui.ajax('http://hq.sinajs.cn/list=s_sz' + stockCodeDhrd + '',{
-//					dataType:'script',//服务器返回json格式数据
-//					type:'get',//HTTP请求类型
-//					timeout:10000,//超时时间设置为10秒；
-//					success:function(data){
-//						//服务器返回响应，根据响应结果，分析是否登录成功；
-//					},
-//					error:function(xhr,type,errorThrown){
-//						//异常处理；
-//						console.log(type);
-//					}
-//				});
-			},
-			error:function(xhr,type,errorThrown){
-				//异常处理；
-				console.log(arguments[0]);
-				console.log(arguments[1]);
-				console.log(arguments[2]);
-			}
-		});
+			});
+		}
+		loadOptionalStock();
       	//s_sz399001
 		//mui.ajax('http://hq.sinajs.cn/list=sh601006',{
-		mui.ajax('http://hq.sinajs.cn/list=s_sz' + stockCodeDhrd + '',{
-			dataType:'script',//服务器返回json格式数据
-			type:'get',//HTTP请求类型
-			timeout:10000,//超时时间设置为10秒；
-			success:function(data){
+//		mui.ajax('http://hq.sinajs.cn/list=s_sz' + stockCodeDhrd + '',{
+//			dataType:'script',//服务器返回json格式数据
+//			type:'get',//HTTP请求类型
+//			timeout:10000,//超时时间设置为10秒；
+//			success:function(data){
 				//服务器返回响应，根据响应结果，分析是否登录成功；
 				//document.getElementById("").innerHTML = "";
 /*
@@ -167,12 +174,12 @@
 //				var muiContent = mui("#muiContent");
 //				muiContent[0].innerHTML = data;
 				//document.write(dstockDataStr);
-			},
-			error:function(xhr,type,errorThrown){
-				//异常处理；
-				console.log(type);
-			}
-		});
+//			},
+//			error:function(xhr,type,errorThrown){
+//				//异常处理；
+//				console.log(type);
+//			}
+//		});
 	</script>
 </body>
 </html>
