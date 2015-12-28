@@ -101,7 +101,10 @@
 			</form>
 			<div class="mui-content-padded">
 				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
-				<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+				<div class="link-area">
+					<a id='reg'>注册账号</a>
+					<span class="spliter">|</span>
+					<a id='forgetPassword'>忘记密码</a>
 				</div>
 			</div>
 			<div class="mui-content-padded oauth-area">
@@ -110,7 +113,7 @@
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.enterfocus.js"></script>
-		<script src="../../js/app.js"></script>
+		<script src="../../js/login.js"></script>
 		<script>
 			(function($, doc) {
 				$.init({
@@ -156,6 +159,7 @@
 						//第三方登录
 						var auths = {};
 						var oauthArea = doc.querySelector('.oauth-area');
+						console.log("第三方登录");
 						plus.oauth.getServices(function(services) {
 							for (var i in services) {
 								var service = services[i];
@@ -163,7 +167,7 @@
 								var btn = document.createElement('div');
 								btn.setAttribute('class', 'oauth-btn');
 								btn.authId = service.id;
-								btn.style.backgroundImage = 'url("images/' + service.id + '.png")'
+								btn.style.backgroundImage = 'url("../../images/' + service.id + '.png")'
 									//alert(service.id);
 									//btn.innerText = service.description + "登录";
 								oauthArea.appendChild(btn);
@@ -214,6 +218,7 @@
 						};
 						app.login(loginInfo, function(err) {
 							if (err) {
+								console.log(err);
 								plus.nativeUI.toast(err);
 								return;
 							}

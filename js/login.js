@@ -18,10 +18,12 @@
 		if (loginInfo.password.length < 6) {
 			return callback('密码最短为 6 个字符');
 		}
-		var users = JSON.parse(localStorage.getItem('$users') || '[]');
-		var authed = users.some(function(user) {
-			return loginInfo.account == user.account && loginInfo.password == user.password;
-		});
+//		var users = JSON.parse(localStorage.getItem('$users') || '[]');
+//		console.log(typeof users);
+//		var authed = users.some(function(user) {
+//			return loginInfo.account == user.account && loginInfo.password == user.password;
+//		});
+		var authed = true;
 		if (authed) {
 			return owner.createState(loginInfo.account, callback);
 		} else {

@@ -251,12 +251,17 @@
 					"js/mui.enterfocus.js",
 					"js/mui.min.js",
 					"fonts/mui.ttf",
-					"css/mui.min.css"
+					"css/mui.min.css",
+					"main.html",
+					"images/sinaweibo.png",
+					"images/weixin.png",
+					"images/qq.png",
+					"js/login.js"
 				],
 				"refer": [
-					"main.html",
 					"examples/login/reg.html",
-					"examples/login/forget_password.html"
+					"examples/login/forget_password.html",
+					"examples/login/unlock.html"
 				],
 				"priority": 0
 			},
@@ -268,6 +273,16 @@
 					"js/mui.min.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"examples/login/unlock.html": {
+				"resources": [
+					"js/mui.min.js",
+					"css/mui.min.css"
+				],
+				"refer": [
+					"examples/login/login.html"
+				],
 				"priority": 0
 			}
 		},
