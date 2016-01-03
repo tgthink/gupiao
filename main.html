@@ -10,7 +10,7 @@
 	<header id="header" class="mui-bar mui-bar-nav">
 		<!-- mui-plus-visible mui-icon-bars-->
 		<!--a class="mui-icon mui-icon-contact mui-pull-left" style="color: #999;"></a-->
-		<a id="login" class="mui-pull-left" style="padding-top: 13px;" href="examples/login/login.html">登录</a>
+		<a id="login" class="mui-pull-left" style="padding-top: 13px;" data-href="examples/login/login.html" data-otherHref="examples/login/setting.html">登录</a>
 		<a id="info" class="mui-icon mui-icon-info-filled mui-pull-right" style="color: #999;"></a>
 		<h1 class="mui-title">谷&nbsp;票</h1>
 	</header>
@@ -49,9 +49,16 @@
         </ul>
 	</div>
     <script src="js/mui.min.js"></script>
+    <script src="js/login.js"></script>
     <script src="js/zepto_1.1.3.js"></script>
     <script type="text/javascript" charset="utf-8">
-      	mui.init();
+    	console.log("??????????????????");
+      	mui.init({
+      		beforeback: function(){
+				console.log("==========================main");
+				return true;
+			}
+      	});
 		//处理右上角关于图标的点击事件；
 //		var subWebview = null,
 //			template = null;
@@ -75,24 +82,73 @@
 //				}
 //			});
 //		});
+		// H5 plus事件处理
+		function plusReady(){
+			var types = {}; 
+			types[plus.networkinfo.CONNECTION_UNKNOW] = "Unknown connection"; 
+			//types[plus.networkinfo.CONNECTION_NONE] = "None connection";
+			types[plus.networkinfo.CONNECTION_NONE] = "网络错误,请检查手机网络设置或尝试重启手机。";
+			types[plus.networkinfo.CONNECTION_ETHERNET] = "Ethernet connection"; 
+			types[plus.networkinfo.CONNECTION_WIFI] = "WiFi connection"; 
+			types[plus.networkinfo.CONNECTION_CELL2G] = "Cellular 2G connection"; 
+			types[plus.networkinfo.CONNECTION_CELL3G] = "Cellular 3G connection"; 
+			types[plus.networkinfo.CONNECTION_CELL4G] = "Cellular 4G connection";
+			var getCurrentType = plus.networkinfo.getCurrentType();
+			if (getCurrentType == plus.networkinfo.CONNECTION_NONE) {
+				alert(types[plus.networkinfo.getCurrentType()]);
+			}
+			console.log( "Network: " + plus.networkinfo.getCurrentType() );
+			console.log( "Network: " + types[plus.networkinfo.getCurrentType()] );
+		}
+		if(window.plus){
+			plusReady();
+		}else{
+			document.addEventListener("plusready", plusReady, false);
+		}
+		var OpenWClass = "open-window-other";
+		var state = app.getState();
+		console.log(JSON.stringify(state));
+		console.log(state["userName"]);
+		if ( state["userName"] != undefined && state["userName"] != "" ) {
+			$("#login").html(state["userName"]).addClass(OpenWClass);
+		}
 		$('#menuList,#header').on('tap', 'a', function() {
 			var aniShow = "pop-in";
 			var $this = $(this);
-			var id = $this.prop('href');
-			var href = $this.prop('href');
-			mui.openWindow({
-				id: id,
-				url: href,
-				styles: {
-					popGesture: 'close'
-				},
-				show: {
-					aniShow: aniShow
-				},
-				waiting: {
-					autoShow: false
-				}
-			});
+			var id = $this.attr('data-href');
+			var href = $this.attr('data-href');
+			console.log(!$this.hasClass(OpenWClass));
+			if ( $this.hasClass(OpenWClass) ) {
+				id = $this.attr('data-otherHref');
+				href = $this.attr('data-otherHref');
+				mui.openWindow({
+					id: id,
+					url: href,
+					styles: {
+						popGesture: 'close'
+					},
+					show: {
+						aniShow: aniShow
+					},
+					waiting: {
+						autoShow: false
+					}
+				});
+			} else {
+				mui.openWindow({
+					id: id,
+					url: href,
+					styles: {
+						popGesture: 'close'
+					},
+					show: {
+						aniShow: aniShow
+					},
+					waiting: {
+						autoShow: false
+					}
+				});
+			}
 		});
 		//document.getElementById('info').addEventListener('tap', function() {
 //			if (!mui.os.plus) {

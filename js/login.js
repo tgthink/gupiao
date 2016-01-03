@@ -10,12 +10,12 @@
 	owner.login = function(loginInfo, callback) {
 		callback = callback || $.noop;
 		loginInfo = loginInfo || {};
-		loginInfo.account = loginInfo.account || '';
-		loginInfo.password = loginInfo.password || '';
-		if (loginInfo.account.length < 5) {
+		loginInfo.userName = loginInfo.userName || '';
+		loginInfo.userPw = loginInfo.userPw || '';
+		if (loginInfo.userName.length < 5) {
 			return callback('账号最短为 5 个字符');
 		}
-		if (loginInfo.password.length < 6) {
+		if (loginInfo.userPw.length < 6) {
 			return callback('密码最短为 6 个字符');
 		}
 //		var users = JSON.parse(localStorage.getItem('$users') || '[]');
@@ -23,18 +23,45 @@
 //		var authed = users.some(function(user) {
 //			return loginInfo.account == user.account && loginInfo.password == user.password;
 //		});
-		var authed = true;
-		if (authed) {
-			return owner.createState(loginInfo.account, callback);
-		} else {
-			return callback('用户名或密码错误');
-		}
+		//var authed = null;
+		
+      	mui.ajax(pConstant.BaseUrl + 'user/login.php', {
+			data: {
+				'userName': loginInfo.userName,
+				'userPw': hex_md5(loginInfo.userPw)
+			},
+			dataType: 'json',//服务器返回json格式数据
+			type: 'post',//HTTP请求类型
+			timeout: 10000,//超时时间设置为10秒;
+			success: function(data){
+				console.log(data["stuats"]);
+				console.log(data["msg"]);
+				console.log(data["data"]);
+				console.log("===================================登录");
+				if (data["stuats"] == 100) {
+					loginInfo.token = data["data"]["token"];
+					owner.createState(loginInfo, callback);
+				} else {
+					callback('用户名或密码错误');
+				}
+			},
+			error: function(xhr,type,errorThrown){
+				//异常处理；
+				console.log(JSON.stringify(xhr));
+				console.log(type);
+				console.log(errorThrown);
+			}
+		});
+//		if (authed) {
+//			return owner.createState(loginInfo.account, callback);
+//		} else {
+//			return callback('用户名或密码错误');
+//		}
 	};
-
-	owner.createState = function(name, callback) {
+	owner.createState = function(loginInfo, callback) {
 		var state = owner.getState();
-		state.account = name;
-		state.token = "token123456789";
+		state.userName = loginInfo.userName;
+		state.token = loginInfo.token;
 		owner.setState(state);
 		return callback();
 	};
@@ -45,21 +72,49 @@
 	owner.reg = function(regInfo, callback) {
 		callback = callback || $.noop;
 		regInfo = regInfo || {};
-		regInfo.account = regInfo.account || '';
-		regInfo.password = regInfo.password || '';
-		if (regInfo.account.length < 5) {
+		regInfo.userName = regInfo.userName || '';
+		regInfo.userPw = regInfo.userPw || '';
+		if (regInfo.userName.length < 5) {
 			return callback('用户名最短需要 5 个字符');
 		}
-		if (regInfo.password.length < 6) {
+		if (regInfo.userPw.length < 6) {
 			return callback('密码最短需要 6 个字符');
 		}
-		if (!checkEmail(regInfo.email)) {
+		if (regInfo.email.length > 0 && !checkEmail(regInfo.email)) {
 			return callback('邮箱地址不合法');
 		}
-		var users = JSON.parse(localStorage.getItem('$users') || '[]');
-		users.push(regInfo);
-		localStorage.setItem('$users', JSON.stringify(users));
-		return callback();
+//		var users = JSON.parse(localStorage.getItem('$users') || '[]');
+//		users.push(regInfo);
+//		localStorage.setItem('$users', JSON.stringify(users));
+
+      	mui.ajax(pConstant.BaseUrl + 'user/reg.php', {
+			data: {
+				'userName': regInfo.userName,
+				'userPw': regInfo.userPw,
+				'email': regInfo.email
+			},
+			dataType: 'json',//服务器返回json格式数据
+			type: 'post',//HTTP请求类型
+			timeout: 10000,//超时时间设置为10秒;
+			success: function(data){
+				console.log(data["stuats"]);
+				console.log(data["msg"]);
+				console.log(data["data"]);
+				console.log("===================================注册");
+				if (data["stuats"] == 100) {
+					callback();
+				} else {
+					callback(data["msg"]);
+				}
+			},
+			error: function(xhr,type,errorThrown){
+				//异常处理；
+				console.log(JSON.stringify(xhr));
+				console.log(type);
+				console.log(errorThrown);
+			}
+		});
+		//return callback();
 	};
 
 	/**

@@ -111,35 +111,56 @@
 
 			</div>
 		</div>
+    	<script src="../../js/zepto_1.1.3.js"></script>
+    	<script src="../../js/public.js"></script>
+    	<script src="../../js/md5.js"></script>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/mui.enterfocus.js"></script>
 		<script src="../../js/login.js"></script>
 		<script>
 			(function($, doc) {
 				$.init({
-					statusBarBackground: '#f7f7f7'
+					statusBarBackground: '#f7f7f7',
+					beforeback: function(){
+						console.log("==========================login");
+						return true;
+					}
 				});
 				$.plusReady(function() {
 					plus.screen.lockOrientation("portrait-primary");
 					var settings = app.getSettings();
 					var state = app.getState();
-					var mainPage = $.preload({
-						"id": 'main',
-						"url": '../../main.html'
-					});
+//					var mainPage = $.preload({
+//						"id": 'main',
+//						"url": '../../main.html'
+//					});
 					var toMain = function() {
-						$.fire(mainPage, 'show', null);
-						setTimeout(function() {
-							$.openWindow({
-								id: 'main',
-								show: {
-									aniShow: 'pop-in'
-								},
-								waiting: {
-									autoShow: false
-								}
-							});
-						}, 0);
+						/*$.fire(mainPage, 'show', null);*/
+//						setTimeout(function() {
+//							$.openWindow({
+//								url: '../../main.html',
+//								id: 'main',
+//								show: {
+//									aniShow: 'pop-in'
+//								},
+//								waiting: {
+//									autoShow: false
+//								}
+//							});
+//							/*设置首页*/
+//							
+//						}, 0);
+						$.openWindow({
+							url: '../../main.html',
+							id: 'main',
+							createNew: true,
+							show: {
+								aniShow: 'pop-in'
+							},
+							waiting: {
+								autoShow: false
+							}
+						});
 					};
 					//检查 "登录状态/锁屏状态" 开始
 					if (settings.autoLogin && state.token && settings.gestures) {
@@ -213,9 +234,17 @@
 					var forgetButton = doc.getElementById('forgetPassword');
 					loginButton.addEventListener('tap', function(event) {
 						var loginInfo = {
-							account: accountBox.value,
-							password: passwordBox.value
+							userName: accountBox.value,
+							userPw: passwordBox.value
 						};
+//						app.login(loginInfo, function(err) {
+//							if (err) {
+//								console.log(err);
+//								plus.nativeUI.toast(err);
+//								return;
+//							}
+//							toMain();
+//						});
 						app.login(loginInfo, function(err) {
 							if (err) {
 								console.log(err);
