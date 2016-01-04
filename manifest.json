@@ -3,7 +3,7 @@
 	"id": "H52060C73",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "gupiao",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.0.1",/*应用版本名称*/
+		"name": "1.0.6",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -101,7 +101,7 @@
         },
         "NativeObj":{
         	"description": "原生对象"
-        },"OAuth":{},"Share":{}
+        }
 	},
 	"plus": {
 		"splashscreen": {
@@ -216,7 +216,10 @@
 					"js/zepto_1.1.3.js",
 					"examples/optionalStock.html",
 					"examples/login/login.html",
-					"js/login.js"
+					"js/login.js",
+					"js/public.js",
+					"images/test1.jpg",
+					"images/test2.jpg"
 				],
 				"refer": [
 					"examples/index.html",

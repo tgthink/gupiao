@@ -47,8 +47,10 @@
                     <span class="mui-icon mui-icon-more"></span>
                     <div class="mui-media-body">more</div></a></li>
         </ul>
+        <img src="images/test2.jpg" width="100%"/>
 	</div>
     <script src="js/mui.min.js"></script>
+    <script src="js/public.js"></script>
     <script src="js/login.js"></script>
     <script src="js/zepto_1.1.3.js"></script>
     <script type="text/javascript" charset="utf-8">
@@ -87,11 +89,86 @@
 			// 获取本地应用资源版本号
 			console.log(plus.runtime.appid);
 			console.log("========================================");
+			var wgtVer=null;
 		    plus.runtime.getProperty(plus.runtime.appid, function(inf){
 		        wgtVer = inf.version;
-		        console.log("当前应用版本："+wgtVer);
+		        console.log("当前应用版本：" + wgtVer);
 		    });
 		    
+		    // 检测更新
+			var checkUrl = pConstant.BaseUrl + "gupiao/check.php";
+			function checkUpdate(){
+			    plus.nativeUI.showWaiting("检测更新...");
+			    var xhr = new XMLHttpRequest();
+			    xhr.onreadystatechange = function(){
+			        switch(xhr.readyState) {
+			            case 4:
+			            plus.nativeUI.closeWaiting();
+			            if (xhr.status == 200) {
+			                console.log("检测更新成功：" + xhr.responseText);
+			                var newVer = xhr.responseText;
+			                var newVerObj = JSON.parse(newVer);
+			                var newVersion = newVerObj["version"];
+			                console.log(newVersion);
+			                var url=""; // 下载文件地址
+							var dtask = plus.downloader.createDownload( url, {}, function ( d, status ) {
+							    if ( status == 200 ) { // 下载成功
+							        var path = d.filename;
+							        console.log(d.filename);
+							    } else {//下载失败
+							        alert( "Download failed: " + status ); 
+							    }  
+							});
+							dtask.start(); 
+			                if(wgtVer&&newVersion&&(wgtVer!=newVersion)){
+			                    downWgt();  // 下载升级包
+			                }else{
+			                    plus.nativeUI.alert("无新版本可更新！");
+			                }
+			            } else {
+			                console.log("检测更新失败！");
+			                plus.nativeUI.alert("检测更新失败！");
+			            }
+			            break;
+			            default:
+			            break;
+			        }
+			    }
+			    xhr.open('GET',checkUrl);
+			    xhr.send();
+			}
+			checkUpdate();
+			// 下载wgt文件
+//			var wgtUrl = pConstant.BaseUrl + "gupiao/update/H52060C73.wgt";
+//			function downWgt() {
+//			    plus.nativeUI.showWaiting("下载wgt文件...");
+//			    plus.downloader.createDownload( wgtUrl, {filename:"_doc/update/"}, function(d,status){
+//			        if ( status == 200 ) { 
+//			            console.log("下载wgt成功："+d.filename);
+//			            installWgt(d.filename); // 安装wgt包
+//			        } else {
+//			            console.log("下载wgt失败！");
+//			            plus.nativeUI.alert("下载wgt失败！");
+//			        }
+//			        plus.nativeUI.closeWaiting();
+//			    }).start();
+//			}
+			// 更新应用资源
+//			function installWgt(path){
+//			    plus.nativeUI.showWaiting("安装wgt文件...");
+//			    plus.runtime.install(path,{},function(){
+//			        plus.nativeUI.closeWaiting();
+//			        console.log("安装wgt文件成功！");
+//			        plus.nativeUI.alert("应用资源更新完成！",function(){
+//			            plus.runtime.restart();
+//			        });
+//			    },function(e){
+//			        plus.nativeUI.closeWaiting();
+//			        console.log("安装wgt文件失败["+e.code+"]："+e.message);
+//			        plus.nativeUI.alert("安装wgt文件失败["+e.code+"]："+e.message);
+//			    });
+//			}
+			
 			var types = {}; 
 			types[plus.networkinfo.CONNECTION_UNKNOW] = "Unknown connection"; 
 			//types[plus.networkinfo.CONNECTION_NONE] = "None connection";
