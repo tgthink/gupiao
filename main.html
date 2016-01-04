@@ -83,7 +83,15 @@
 //			});
 //		});
 		// H5 plus事件处理
-		function plusReady(){
+		function plusReady() {
+			// 获取本地应用资源版本号
+			console.log(plus.runtime.appid);
+			console.log("========================================");
+		    plus.runtime.getProperty(plus.runtime.appid, function(inf){
+		        wgtVer = inf.version;
+		        console.log("当前应用版本："+wgtVer);
+		    });
+		    
 			var types = {}; 
 			types[plus.networkinfo.CONNECTION_UNKNOW] = "Unknown connection"; 
 			//types[plus.networkinfo.CONNECTION_NONE] = "None connection";
@@ -100,9 +108,9 @@
 			console.log( "Network: " + plus.networkinfo.getCurrentType() );
 			console.log( "Network: " + types[plus.networkinfo.getCurrentType()] );
 		}
-		if(window.plus){
+		if (window.plus) {
 			plusReady();
-		}else{
+		} else {
 			document.addEventListener("plusready", plusReady, false);
 		}
 		var OpenWClass = "open-window-other";
