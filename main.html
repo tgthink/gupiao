@@ -97,6 +97,28 @@
 		    
 		    // 检测更新
 			var checkUrl = pConstant.BaseUrl + "gupiao/check.php";
+			// 监听下载任务状态 
+			var wgtWaiting = plus.nativeUI.showWaiting("开始下载");
+			function onStateChanged( download, status ) {
+				console.log(download.state + ">>>>>" + status);
+				console.log("=============================================");
+//				if ( download.state == 4 && status == 200 ) {
+//					// 下载完成 
+//					console.log( "Download success: " + download.getFileName() );  
+//				}
+				switch (download.state) {
+		            case 2:
+		                wgtWaiting.setTitle("已连接到服务器");
+		                break;
+		            case 3:
+		                var percent = download.downloadedSize / download.totalSize * 100;
+		                wgtWaiting.setTitle("已下载 " + parseInt(percent) + "%");
+		                break;
+		            case 4:
+		                wgtWaiting.setTitle("下载完成");
+		                break;
+		        }
+			}
 			function checkUpdate(){
 			    plus.nativeUI.showWaiting("检测更新...");
 			    var xhr = new XMLHttpRequest();
@@ -110,23 +132,33 @@
 			                var newVerObj = JSON.parse(newVer);
 			                var newVersion = newVerObj["version"];
 			                console.log(wgtVer + "=" + newVersion);
-			                if(wgtVer&&newVersion&&(wgtVer!=newVersion)){
+			                //if(wgtVer&&newVersion&&(wgtVer!=newVersion)){
 			                    //downWgt();  // 下载升级包
 			                    
-				                var downloadUrl = pConstant.BaseUrl + "gupiao/update/gupiao" + newVersion + ".apk"; // 下载文件地址
-								var dtask = plus.downloader.createDownload( downloadUrl, {}, function ( d, status ) {
-								    if ( status == 200 ) { // 下载成功
-								        var path = d.filename;
-								        console.log(d.filename);
-								        plus.runtime.install(path);  // 安装下载的apk文件
-								    } else {//下载失败
-								        alert( "Download failed: " + status ); 
-								    }  
-								});
-								dtask.start(); 
-			                }else{
-			                    plus.nativeUI.alert("无新版本可更新！");
-			                }
+								plus.nativeUI.confirm( "谷票" + newVersion + "更新", function(event){
+									console.log(event.index);
+									if ( 0 == event.index ) {
+						                var downloadUrl = pConstant.BaseUrl + "gupiao/update/gupiao" + newVersion + ".apk"; // 下载文件地址
+//										var dtask = plus.downloader.createDownload( downloadUrl, {}, function ( d, status ) {
+//											console.log(arguments);
+//										    if ( status == 200 ) { // 下载成功
+//										        var path = d.filename;
+//										        console.log(d.filename);
+//										        console.log("============================22222222");
+//										        plus.runtime.install(path);  // 安装下载的apk文件
+//										    } else {//下载失败
+//										        alert( "Download failed: " + status ); 
+//										    }  
+//										});
+										var dtask = plus.downloader.createDownload( downloadUrl);
+										dtask.start();
+										dtask.addEventListener( "statechanged", onStateChanged, false );
+										//plus.runtime.openURL( data.url );
+									}
+								}, "新版本：" + newVersion, ["立即更新","取　　消"] );
+			                //}else{
+			                    //plus.nativeUI.alert("无新版本可更新！");
+			                //}
 			            } else {
 			                console.log("检测更新失败！");
 			                plus.nativeUI.alert("检测更新失败！");
