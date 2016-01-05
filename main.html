@@ -47,7 +47,7 @@
                     <span class="mui-icon mui-icon-more"></span>
                     <div class="mui-media-body">more</div></a></li>
         </ul>
-        <img src="images/test2.jpg" width="100%"/>
+        <img src="images/test1.jpg" width="100%"/>
 	</div>
     <script src="js/mui.min.js"></script>
     <script src="js/public.js"></script>
@@ -109,19 +109,21 @@
 			                var newVer = xhr.responseText;
 			                var newVerObj = JSON.parse(newVer);
 			                var newVersion = newVerObj["version"];
-			                console.log(newVersion);
-			                var url=""; // 下载文件地址
-							var dtask = plus.downloader.createDownload( url, {}, function ( d, status ) {
-							    if ( status == 200 ) { // 下载成功
-							        var path = d.filename;
-							        console.log(d.filename);
-							    } else {//下载失败
-							        alert( "Download failed: " + status ); 
-							    }  
-							});
-							dtask.start(); 
+			                console.log(wgtVer + "=" + newVersion);
 			                if(wgtVer&&newVersion&&(wgtVer!=newVersion)){
-			                    downWgt();  // 下载升级包
+			                    //downWgt();  // 下载升级包
+			                    
+				                var downloadUrl = pConstant.BaseUrl + "gupiao/update/gupiao" + newVersion + ".apk"; // 下载文件地址
+								var dtask = plus.downloader.createDownload( downloadUrl, {}, function ( d, status ) {
+								    if ( status == 200 ) { // 下载成功
+								        var path = d.filename;
+								        console.log(d.filename);
+								        plus.runtime.install(path);  // 安装下载的apk文件
+								    } else {//下载失败
+								        alert( "Download failed: " + status ); 
+								    }  
+								});
+								dtask.start(); 
 			                }else{
 			                    plus.nativeUI.alert("无新版本可更新！");
 			                }
