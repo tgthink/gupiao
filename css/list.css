@@ -7,7 +7,7 @@
 }
 /*点击变蓝色高亮*/
 .mui-table-view-cell.mui-active {
-  background-color: #0062CC;
+  /*background-color: #0062CC;*/
 }
 .table-view-title {
   color: #cacaca;
@@ -40,4 +40,17 @@
 .mui-table-view-cell .currentPrice {
   margin-top: 10px;
 }
-/*# sourceMappingURL=index.css.map */
+.uad-list .view1,
+.uad-list .view2 {
+  float: left;
+}
+.uad-list .view1 {
+  width: 20%;
+}
+.uad-list .view2 {
+  width: 80%;
+}
+.uad-list .header .header-inner > div {
+  float: left;
+}
+/*# sourceMappingURL=list.css.map */
