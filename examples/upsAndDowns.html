@@ -8,7 +8,7 @@
     <link href="../css/list.css" rel="stylesheet"/>
 </head>
 <body>
-	<header class="mui-bar mui-bar-nav">
+	<header id="uadTitle" class="mui-bar mui-bar-nav">
 		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">涨跌排行</h1>
 	</header>
@@ -22,6 +22,36 @@
 			<div class="body">
 				<div class="body-inner">
 					<ul>
+						<li>
+							<div class="name stock-name">
+								<div>xxxxxxxxx</div>
+								<span>000000</span>
+							</div>
+						</li>
+						<li>
+							<div class="name stock-name">
+								<div>xxxxxxxxx</div>
+								<span>000000</span>
+							</div>
+						</li>
+						<li>
+							<div class="name stock-name">
+								<div>xxxxxxxxx</div>
+								<span>000000</span>
+							</div>
+						</li>
+						<li>
+							<div class="name stock-name">
+								<div>xxxxxxxxx</div>
+								<span>000000</span>
+							</div>
+						</li>
+						<li>
+							<div class="name stock-name">
+								<div>xxxxxxxxx</div>
+								<span>000000</span>
+							</div>
+						</li>
 						<li>
 							<div class="name stock-name">
 								<div>xxxxxxxxx</div>
@@ -191,6 +221,46 @@
 							<div class="currentPrice">16.50</div>
 							<div class="currentPrice">16.50</div>
 						</li>
+						<li>
+							<div class="riseAndFall">5.00%</div>
+							<div class="upsAndDowns">0.09</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+						</li>
+						<li>
+							<div class="riseAndFall">5.00%</div>
+							<div class="upsAndDowns">0.09</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+						</li>
+						<li>
+							<div class="riseAndFall">5.00%</div>
+							<div class="upsAndDowns">0.09</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+						</li>
+						<li>
+							<div class="riseAndFall">5.00%</div>
+							<div class="upsAndDowns">0.09</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+						</li>
+						<li>
+							<div class="riseAndFall">5.00%</div>
+							<div class="upsAndDowns">0.09</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+							<div class="currentPrice">16.50</div>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -229,9 +299,22 @@
 			</li>
 		</ul-->
 	</div>
+	<!--div id="testDiv" style="position: absolute;top: 0;left: 0;width: 100%;z-index: 100;background: red;"></div-->
     <script src="../js/mui.min.js"></script>
+    <script src="../js/zepto_1.1.3.js"></script>
     <script type="text/javascript" charset="UTF-8">
       	mui.init();
+      	var windowHeight = $(window).height();
+      	//$("#testDiv").height(windowHeight);
+      	console.log($(window).height()); //浏览器当前窗口可视区域高度
+		console.log($(document).height()); //浏览器当前窗口文档的高度 
+		console.log($(document.body).height());//浏览器当前窗口文档body的高度 
+		//console.log($(document.body).outerHeight(true));//浏览器当前窗口文档body的总高度 包括border padding margin 
+		console.log($(window).width()); //浏览器当前窗口可视区域宽度 
+		console.log($(document).width());//浏览器当前窗口文档对象宽度 
+		console.log($(document.body).width());//浏览器当前窗口文档body的高度 
+		//console.log($(document.body).outerWidth(true));//浏览器当前窗口文档body的总宽度 包括border padding margin 
+      	console.log($("#uadTitle").height());
     </script>
 </body>
 </html>
