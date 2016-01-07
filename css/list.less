@@ -5,6 +5,10 @@
     clear: both;
     visibility: hidden;
 }
+ul {
+    margin: 0;
+    padding: 0;
+}
 /*点击变蓝色高亮*/
 .mui-table-view-cell.mui-active {
     /*background-color: #0062CC;*/
@@ -41,6 +45,7 @@
     }
 }
 .uad-list {
+    overflow: hidden;
     .view1, .view2 {
         float: left;
     }
@@ -49,11 +54,40 @@
     }
     .view2 {
         width: 80%;
+        overflow: auto;
     }
     .header {
         .header-inner {
             &>div {
                 float: left;
+            }
+        }
+    }
+    .body {
+        .body-inner {
+            ul {
+                &.uad-info {
+                    width: 1000px;
+                    li {
+                        height: 42px;
+                        line-height: 42px;
+                    }
+                }
+                li {
+                    &:before {
+                        display: table;
+                        content: " ";
+                    }
+                    &:after {
+                        display: table;
+                        content: " ";
+                        clear: both;
+                    }
+                    list-style: none;
+                    &>div {
+                        float: left;
+                    }
+                }
             }
         }
     }

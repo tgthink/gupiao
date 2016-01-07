@@ -5,6 +5,10 @@
   clear: both;
   visibility: hidden;
 }
+ul {
+  margin: 0;
+  padding: 0;
+}
 /*点击变蓝色高亮*/
 .mui-table-view-cell.mui-active {
   /*background-color: #0062CC;*/
@@ -40,6 +44,9 @@
 .mui-table-view-cell .currentPrice {
   margin-top: 10px;
 }
+.uad-list {
+  overflow: hidden;
+}
 .uad-list .view1,
 .uad-list .view2 {
   float: left;
@@ -49,8 +56,31 @@
 }
 .uad-list .view2 {
   width: 80%;
+  overflow: auto;
 }
 .uad-list .header .header-inner > div {
+  float: left;
+}
+.uad-list .body .body-inner ul.uad-info {
+  width: 1000px;
+}
+.uad-list .body .body-inner ul.uad-info li {
+  height: 42px;
+  line-height: 42px;
+}
+.uad-list .body .body-inner ul li {
+  list-style: none;
+}
+.uad-list .body .body-inner ul li:before {
+  display: table;
+  content: " ";
+}
+.uad-list .body .body-inner ul li:after {
+  display: table;
+  content: " ";
+  clear: both;
+}
+.uad-list .body .body-inner ul li > div {
   float: left;
 }
 /*# sourceMappingURL=list.css.map */
