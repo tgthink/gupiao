@@ -45,8 +45,14 @@ ul {
     }
 }
 .uad-list {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
     overflow: hidden;
     .view1, .view2 {
+        height: 100%;
         float: left;
     }
     .view1 {
@@ -54,7 +60,6 @@ ul {
     }
     .view2 {
         width: 76%;
-        overflow: auto;
     }
     .header {
         .header-inner {
@@ -64,6 +69,7 @@ ul {
         }
     }
     .body {
+        overflow: auto;
         .body-inner {
             ul {
                 &.uad-info {

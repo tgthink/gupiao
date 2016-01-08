@@ -45,10 +45,16 @@ ul {
   margin-top: 10px;
 }
 .uad-list {
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  left: 0;
   overflow: hidden;
 }
 .uad-list .view1,
 .uad-list .view2 {
+  height: 100%;
   float: left;
 }
 .uad-list .view1 {
@@ -56,10 +62,12 @@ ul {
 }
 .uad-list .view2 {
   width: 76%;
-  overflow: auto;
 }
 .uad-list .header .header-inner > div {
   float: left;
+}
+.uad-list .body {
+  overflow: auto;
 }
 .uad-list .body .body-inner ul.uad-info {
   width: 1000px;
